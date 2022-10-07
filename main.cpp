@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "Character.h"
+#include "Prop.h"
  
 int main()
 {
@@ -19,6 +20,8 @@ int main()
     Character knihgt(windowDimension[0], windowDimension[1]);
 
 
+    Prop rock{Vector2{0.f, 0.f}, LoadTexture("./nature_tileset/Rock.png")};
+
     SetTargetFPS(60);
     while (!WindowShouldClose())
     {
@@ -26,11 +29,14 @@ int main()
         ClearBackground(WHITE);
 
         mapPos = Vector2Scale(knihgt.getWorldPos(), -1.f);
+
         
         // draw the map
         DrawTextureEx(map, mapPos, 0.0, mapScale, WHITE);
-        knihgt.tick(GetFrameTime());
 
+        rock.Render(knihgt.getWorldPos());
+
+        knihgt.tick(GetFrameTime());
         // check map bounds
         if (knihgt.getWorldPos().x < 0.f ||
             knihgt.getWorldPos().y < 0.f ||

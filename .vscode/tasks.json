@@ -75,7 +75,10 @@
             "problemMatcher": [
                 "$gcc"
             ],
-            "group": "build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
             "detail": "compiler: C:\\raylib\\w64devkit\\bin\\g++.exe"
         },
         {
@@ -95,10 +98,7 @@
             "problemMatcher": [
                 "$gcc"
             ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
+            "group": "build",
             "detail": "компилятор: C:/raylib/w64devkit/bin/gcc.exe"
         }
     ]
