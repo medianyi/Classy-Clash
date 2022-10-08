@@ -2,7 +2,8 @@
 #include "raymath.h"
 #include "Character.h"
 #include "Prop.h"
- 
+#include "Enemy.h"
+
 int main()
 {
     // array with window dimensions
@@ -21,7 +22,13 @@ int main()
 
     Prop props[2]{
         Prop{Vector2{600.f, 300.f}, LoadTexture("./nature_tileset/Rock.png")},
-        Prop{Vector2{400.f, 500.f}, LoadTexture("./nature_tileset/Log.png")}
+        Prop{Vector2{400.f, 500.f}, LoadTexture("./nature_tileset/Log.png")}};
+
+    Enemy goblin{
+        Vector2{},
+        LoadTexture("./characters/goblin_idle_spritesheet.png"),
+        LoadTexture("./characters/goblin_run_spritesheet.png")
+
     };
 
     SetTargetFPS(60);
@@ -32,7 +39,6 @@ int main()
 
         mapPos = Vector2Scale(knihgt.getWorldPos(), -1.f);
 
-        
         // draw the map
         DrawTextureEx(map, mapPos, 0.0, mapScale, WHITE);
 
@@ -41,18 +47,17 @@ int main()
         {
             prop.Render(knihgt.getWorldPos());
         }
-        
 
         knihgt.tick(GetFrameTime());
         // check map bounds
         if (knihgt.getWorldPos().x < 0.f ||
             knihgt.getWorldPos().y < 0.f ||
             knihgt.getWorldPos().x + windowDimension[0] > map.width * mapScale ||
-            knihgt.getWorldPos().y + windowDimension[1] > map.height * mapScale
-        )
+            knihgt.getWorldPos().y + windowDimension[1] > map.height * mapScale)
         {
             knihgt.undoMovement();
         }
+
 
         for (auto prop : props)
         {
@@ -61,7 +66,9 @@ int main()
                 knihgt.undoMovement();
             }
         }
+
         
+        goblin.tick(GetFrameTime());
 
         EndDrawing();
     }
