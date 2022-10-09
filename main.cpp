@@ -3,6 +3,7 @@
 #include "Character.h"
 #include "Prop.h"
 #include "Enemy.h"
+#include "BaseCharacter.h"
 
 int main()
 {
