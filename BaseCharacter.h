@@ -7,9 +7,9 @@ class BaseCharacter
 public:
     BaseCharacter();
     Vector2 getWorldPos() { return worldPos; }
-    void tick(float deltaTime);
     void undoMovement();
     Rectangle getCollisionRec();
+    virtual void tick(float deltaTime);
 
 protected:
     Texture2D texture{LoadTexture("./characters/knight_run_spritesheet.png")};
