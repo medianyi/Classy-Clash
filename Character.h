@@ -1,5 +1,7 @@
+#ifndef CHARACTER
+#define CHARACTER
 #include "raylib.h"
-#include "BaseCharacter.h"
+#include "BaseCharacter.h" 
 
 class Character : public BaseCharacter
 {
@@ -10,3 +12,4 @@ public:
 private:
  
 };
+#endif
