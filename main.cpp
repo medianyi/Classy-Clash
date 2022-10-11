@@ -27,10 +27,22 @@ int main()
         Prop{Vector2{400.f, 500.f}, LoadTexture("./nature_tileset/Log.png")}};
 
     Enemy goblin{
-        Vector2{},
+        Vector2{500.f, 300.f},
         LoadTexture("./characters/goblin_idle_spritesheet.png"),
         LoadTexture("./characters/goblin_run_spritesheet.png")};
-    goblin.setTaret(&knihgt);
+
+    Enemy slime{
+        Vector2{500.f, 700.f},
+        LoadTexture("./characters/slime_idle_spritesheet.png"),
+        LoadTexture("./characters/slime_run_spritesheet.png")};
+
+    Enemy *enemies[]{
+        &goblin,
+        &slime};
+    for (auto enemy : enemies)
+    {
+        enemy->setTaret(&knihgt);
+    }
 
     SetTargetFPS(60);
     while (!WindowShouldClose())
@@ -76,19 +88,24 @@ int main()
         else // Character is alive
         {
             std::string knihgtsHealth = "Health: ";
-            knihgtsHealth.append(std::to_string(knihgt.tgetHealth()), 0, 5);
+            knihgtsHealth.append(std::to_string(knihgt.getHealth()), 0, 5);
             DrawText(knihgtsHealth.c_str(), 55.f, 45.f, 40, RED);
         }
-        
 
-        goblin.tick(GetFrameTime());
-
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        for (auto enemy : enemies)
         {
-            if (CheckCollisionRecs(goblin.getCollisionRec(), knihgt.getWeaponCollisionRec()))
+            enemy->tick(GetFrameTime());
+        }
+
+        for (auto enemy : enemies)
+        {
+            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
             {
-                
-                goblin.setAlive(false);
+                if (CheckCollisionRecs(enemy->getCollisionRec(), knihgt.getWeaponCollisionRec()))
+                {
+
+                    enemy->setAlive(false);
+                }
             }
         }
 
