@@ -4,6 +4,7 @@
 #include "Prop.h"
 #include "Enemy.h"
 #include "BaseCharacter.h"
+#include <string>
 
 int main()
 {
@@ -66,12 +67,27 @@ int main()
             }
         }
 
+        if (!knihgt.getAlive()) // Character is not live
+        {
+            DrawText("Game Over!", 55.f, 45.f, 40, RED);
+            EndDrawing();
+            continue;
+        }
+        else // Character is alive
+        {
+            std::string knihgtsHealth = "Health: ";
+            knihgtsHealth.append(std::to_string(knihgt.tgetHealth()), 0, 5);
+            DrawText(knihgtsHealth.c_str(), 55.f, 45.f, 40, RED);
+        }
+        
+
         goblin.tick(GetFrameTime());
 
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         {
             if (CheckCollisionRecs(goblin.getCollisionRec(), knihgt.getWeaponCollisionRec()))
             {
+                
                 goblin.setAlive(false);
             }
         }
