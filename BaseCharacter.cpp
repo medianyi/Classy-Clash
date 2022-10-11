@@ -16,7 +16,8 @@ Rectangle BaseCharacter::getCollisionRec()
         getScreenPos().x,
         getScreenPos().y,
         width * scale,
-        height * scale};
+        height * scale
+        };
 };
 void BaseCharacter::tick(float deltaTime)
 {
@@ -28,7 +29,7 @@ void BaseCharacter::tick(float deltaTime)
     {
         frame++;
         runningTime = 0.f;
-        if (frame > maxFrame)
+        if (frame > maxFrames)
         {
             frame = 0;
         }

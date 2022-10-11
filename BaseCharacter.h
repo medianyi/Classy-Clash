@@ -23,7 +23,7 @@ protected:
     // animation variable
     float runningTime{};
     int frame{};
-    int maxFrame{6};
+    int maxFrames{6};
     float updateTime{1.f / 12.f};
     float speed{4.f};
     float width{};
