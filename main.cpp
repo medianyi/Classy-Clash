@@ -28,8 +28,7 @@ int main()
     Enemy goblin{
         Vector2{},
         LoadTexture("./characters/goblin_idle_spritesheet.png"),
-        LoadTexture("./characters/goblin_run_spritesheet.png")
-    };
+        LoadTexture("./characters/goblin_run_spritesheet.png")};
     goblin.setTaret(&knihgt);
 
     SetTargetFPS(60);
@@ -59,7 +58,6 @@ int main()
             knihgt.undoMovement();
         }
 
-
         for (auto prop : props)
         {
             if (CheckCollisionRecs(prop.getCollisionRec(knihgt.getWorldPos()), knihgt.getCollisionRec()))
@@ -68,8 +66,15 @@ int main()
             }
         }
 
-        
         goblin.tick(GetFrameTime());
+
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        {
+            if (CheckCollisionRecs(goblin.getCollisionRec(), knihgt.getWeaponCollisionRec()))
+            {
+                goblin.setAlive(false);
+            }
+        }
 
         EndDrawing();
     }

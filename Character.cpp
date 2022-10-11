@@ -1,26 +1,29 @@
 #include "Character.h"
 #include "raymath.h"
 
-Character::Character(int winWidth, int winHeight) : 
-windowWidth(winWidth),
-windowHeight(winHeight)
+Character::Character(int winWidth, int winHeight) : windowWidth(winWidth),
+                                                    windowHeight(winHeight)
 {
     width = texture.width / maxFrames;
     height = texture.height;
-
 }
 
 Vector2 Character::getScreenPos()
 {
     return Vector2{
         static_cast<float>(windowWidth) / 2.0f - scale * (0.5f * width),
-        static_cast<float>(windowHeight) / 2.0f - scale *(0.5f * height)
-        };
-    }
+        static_cast<float>(windowHeight) / 2.0f - scale * (0.5f * height)};
+}
 
 
-void Character::tick(float deltaTime)
+void Character::tick(float deltaTime) 
 {
+    if (!getAlive()) return;
+    {
+        /* code */
+    }
+    
+
     if (IsKeyDown(KEY_A))
         velocity.x -= speed;
     if (IsKeyDown(KEY_D))
@@ -42,9 +45,8 @@ void Character::tick(float deltaTime)
             getScreenPos().x + offset.x,
             getScreenPos().y + offset.y - weapon.height * scale,
             weapon.width * scale,
-            weapon.height * scale
-        };
-        rotation = 35.f;
+            weapon.height * scale};
+        IsMouseButtonDown(MOUSE_LEFT_BUTTON) ? rotation = 35.f : rotation = 0.f;
     }
     else
     {
@@ -54,13 +56,12 @@ void Character::tick(float deltaTime)
             getScreenPos().x + offset.x - weapon.width * scale,
             getScreenPos().y + offset.y - weapon.height * scale,
             weapon.width * scale,
-            weapon.height * scale
-        };
-        rotation = -35.f;
-    }
-    
+            weapon.height * scale};
+            IsMouseButtonDown(MOUSE_LEFT_BUTTON) ? rotation = -35.f : rotation = 0.f;
 
-    // draw the sword 
+    }
+
+    // draw the sword
     Rectangle sourece{0.f, 0.f, static_cast<float>(weapon.width) * rightLeft, static_cast<float>(weapon.height)};
     Rectangle dest{getScreenPos().x + offset.x, getScreenPos().y + offset.y, weapon.width * scale, weapon.height * scale};
     DrawTexturePro(weapon, sourece, dest, origin, rotation, WHITE);
@@ -70,6 +71,5 @@ void Character::tick(float deltaTime)
         weaponCollisionRec.y,
         weaponCollisionRec.width,
         weaponCollisionRec.height,
-        RED
-    );
+        RED);
 }
